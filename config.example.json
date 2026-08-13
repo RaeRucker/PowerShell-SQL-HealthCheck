@@ -1,0 +1,33 @@
+{
+  "Report": {
+    "OutputFolder": "output",
+    "FilePrefix": "SqlHealthCheck",
+    "RetentionCount": 10,
+    "ExportFullBackupCsv": true
+  },
+  "Sql": {
+    "ConnectionTimeoutSeconds": 5,
+    "CommandTimeoutSeconds": 120,
+    "IntegratedSecurity": true,
+    "TrustServerCertificate": true
+  },
+  "Thresholds": {
+    "MemoryWarningPercent": 75,
+    "MemoryCriticalPercent": 90,
+    "DiskWarningFreePercent": 30,
+    "DiskCriticalFreePercent": 15,
+    "FullBackupWarningHours": 24,
+    "FullBackupCriticalHours": 72
+  },
+  "Email": {
+    "Enabled": false,
+    "From": "sql-health@example.com",
+    "To": [
+      "dba@example.com"
+    ],
+    "Subject": "SQL Server Health Check Report",
+    "SmtpServer": "smtp.example.com",
+    "SmtpPort": 25,
+    "UseSsl": false
+  }
+}

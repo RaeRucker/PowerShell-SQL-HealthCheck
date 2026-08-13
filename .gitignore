@@ -1,0 +1,15 @@
+# Local configuration / environment inventory
+config.json
+serverlist.txt
+SQLBuildReference.json
+
+# Generated output (can contain server/database/job names)
+output/
+HTMLout/
+*.html
+FullBackupReport.csv
+
+# PowerShell / editor artifacts
+*.log
+.vscode/
+.idea/
