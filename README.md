@@ -33,28 +33,31 @@ SqlHealthCheck-Universal/
 
 ## Quick start
 
-1. Clone/download the repository onto a Windows system that can reach the SQL instances.
-2. Create your local configuration:
+1. Clone the repository, or download and extract the ZIP, onto a Windows system that can reach the target SQL Server instances.
+
+2. Open PowerShell and change into the repository directory:
+
+```powershell
+cd .\PowerShell-SQL-HealthCheck
+```
+
+3. Create your local configuration files from the included examples:
 
 ```powershell
 Copy-Item .\config.example.json .\config.json
 Copy-Item .\serverlist.example.txt .\serverlist.txt
 ```
 
-3. Edit `serverlist.txt`:
+4. Edit `config.json` and `serverlist.txt` with the settings and SQL Server instances for your environment.
 
-```text
-SQLSERVER01
-SQLSERVER02\INSTANCE01
-SQLSERVER03,14330
-```
+5. Run the health check:
 
-4. Edit thresholds and optional email settings in `config.json`.
-5. Run the check:
+> **Note:** PowerShell may ask for permission to run the scripts. If you trust this repository, select **A (Yes to All)** to continue.
 
 ```powershell
 .\Run-SqlHealthCheck.ps1
 ```
+
 
 The first run attempts to create a local `SQLBuildReference.json` cache from Microsoft Learn. Generated reports are written to the configured output directory.
 
