@@ -1,4 +1,4 @@
-# Universal SQL Server Health Check
+# PowerShell-SQL-HealthCheck
 
 A PowerShell-based SQL Server health-check framework that inventories one or more SQL Server instances and produces a self-contained HTML report plus an optional CSV backup inventory.
 
@@ -73,7 +73,7 @@ Copy-Item .\serverlist.example.txt .\serverlist.txt
 
 5. Run the health check:
 
-> **Note:** PowerShell may ask for permission to run the scripts. If you trust this repository, select **A (Yes to All)** to continue.
+> **Note:** Depending on your PowerShell execution policy, Windows may require permission before running downloaded scripts.
 
 ```powershell
 .\Run-SqlHealthCheck.ps1
@@ -84,17 +84,21 @@ The first run attempts to create a local `SQLBuildReference.json` cache from Mic
 
 ## Optional SQL discovery
 
-The discovery helper can combine SQL SPNs, Active Directory server enumeration, remote Windows service inspection, and SQL Browser discovery:
+Administrators who do not already have a complete list of SQL Server instances can use the included discovery helper to identify SQL instances across the environment.
+
+The recommended discovery method uses SQL SPNs and SQL Browser discovery while avoiding a broad remote service scan:
+
+```powershell
+.\Find-SqlInstances.ps1 -SkipActiveDirectoryServiceScan
+```
+
+For a more comprehensive search, administrators can also include Active Directory server enumeration and remote Windows service inspection:
 
 ```powershell
 .\Find-SqlInstances.ps1
 ```
 
-Remote service discovery requires the Active Directory PowerShell module and sufficient rights/network access to query remote servers. It can be noisy in a large domain, so review the script and use the skip switches when appropriate:
-
-```powershell
-.\Find-SqlInstances.ps1 -SkipActiveDirectoryServiceScan
-```
+Remote service discovery requires the Active Directory PowerShell module along with sufficient permissions and network access to query remote servers. In large domains, this scan may generate significant network activity, so use it only when appropriate.
 
 ## Scheduling
 
@@ -157,3 +161,11 @@ Generated reports can contain server names, database names, SQL Agent job names,
 ## Portfolio note
 
 The project demonstrates practical Windows/SQL infrastructure automation: discovery, multi-instance health collection, SQL querying, version/lifecycle evaluation, backup monitoring, storage/memory checks, report generation, configuration management, error handling, and scheduled execution.
+
+## Example Report
+
+The health check generates a self-contained HTML report with a centralized view of SQL Server health across the environment.
+
+<img width="2528" height="1048" alt="SQLHTML-Output_1" src="https://github.com/user-attachments/assets/7ef0cf8d-1a7c-46ba-a08b-03cb3ffdc578" />
+
+<img width="2496" height="1102" alt="SQLHTML-Output_2" src="https://github.com/user-attachments/assets/e2c7c23e-35b4-4c18-90b2-eb70db88e959" />
