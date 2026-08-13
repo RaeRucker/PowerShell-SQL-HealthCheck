@@ -14,8 +14,9 @@ This repository is intentionally environment-neutral: no production server names
 - SQL Agent enabled/disabled state and latest run result
 - Clustered-instance status and current physical host node
 - Collection/query errors
-==========================================================================================================================================================================================
+## Workflow
 
+```text
 serverlist.txt + config.json
            │
            ▼
@@ -26,16 +27,15 @@ Invoke-SqlHealthCheck.ps1
            │
     ┌──────┼────────┐
     ▼      ▼        ▼
-SQL DMV  MSDB    Windows
-Checks   Checks   Checks
+ SQL DMV  MSDB   Windows
+ Checks   Checks   Checks
     └──────┼────────┘
            ▼
-     HTML Report
+      HTML Report
            │
            ▼
-    Daily Email
-
-===========================================================================================================================================================================================
+      Daily Email
+```
 ## Repository layout
 
 ```text
