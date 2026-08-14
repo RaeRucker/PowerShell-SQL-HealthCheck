@@ -45,8 +45,8 @@ SqlHealthCheck-Universal/
 ├── Find-SqlInstances.ps1       # Optional discovery helper
 ├── HtmlReportTemplate.ps1      # HTML/CSS rendering
 ├── Install-ScheduledTask.ps1   # Optional daily Task Scheduler installer
-├── config.example.json         # Safe configuration template
-├── serverlist.example.txt      # Safe inventory example
+├── config.json                 # Safe configuration template
+├── serverlist.txt              # Safe inventory example
 └── .gitignore                  # Keeps local data/reports out of Git
 ```
 
