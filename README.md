@@ -52,35 +52,70 @@ SqlHealthCheck-Universal/
 
 `SQLBuildReference.json` is generated locally as a cache and is intentionally ignored by Git.
 
-## Quick start
+## Quick Start
 
-1. Clone the repository, or download and extract the ZIP, onto a Windows system that can reach the target SQL Server instances.
+### Requirements
 
-2. Open PowerShell and change into the repository directory:
+Before running the health check, make sure:
 
-```powershell
-cd .\PowerShell-SQL-HealthCheck
+- PowerShell is available on the Windows system running the script.
+- The system running the script can reach each target SQL Server instance.
+- The account running the script can authenticate to each SQL Server instance.
+- The account has permission to read the SQL Server health information used by the report.
+- PowerShell script execution is allowed by your organization's execution policy.
+
+The health check can also be run directly from one of the SQL Servers being monitored, as long as that server is included in `serverlist.txt`.
+
+### SQL Server Permissions
+
+The account running the health check does not need full SQL Server administrative access, but it must be able to read server-level health information, backup history, and SQL Agent job data.
+
+Depending on the SQL Server version, the required server-level permission is:
+
+- SQL Server 2019 and earlier: `VIEW SERVER STATE`
+- SQL Server 2022 and later: `VIEW SERVER PERFORMANCE STATE`
+
+For SQL Agent reporting, the account should also have access to SQL Agent job information in `msdb`, such as membership in `SQLAgentReaderRole`.
+
+Use a least-privilege monitoring or service account where possible.
+
+## Run the Health Check
+
+1. Download and extract the repository onto a Windows system that can reach the target SQL Server instances.
+
+2. Open `config.json` and update the settings for your environment.
+
+3. Open `serverlist.txt` and enter each SQL Server instance you want to monitor, one per line.
+
+Example:
+
+```text
+<SQLSERVERNAME>
+<SQLSERVERNAME>\<INSTANCENAME>
+<SQLSERVERNAME>,<PORT>
 ```
 
-3. Create your local configuration files from the included examples:
+For example:
 
-```powershell
-Copy-Item .\config.example.json .\config.json
-Copy-Item .\serverlist.example.txt .\serverlist.txt
+```text
+SQLSERVER01
+SQLSERVER02\SQLEXPRESS
+SQLSERVER03,1433
 ```
 
-4. Edit `config.json` and `serverlist.txt` with the settings and SQL Server instances for your environment.
+If the script is being run directly from one of the target SQL Servers, include that server in `serverlist.txt` so it is included in the health check.
+
+4. Open PowerShell in the extracted repository folder.
+
+> **Note:** PowerShell may ask for permission to run the scripts. If you trust this repository, select **A (Yes to All)** to continue.
 
 5. Run the health check:
-
-> **Note:** Depending on your PowerShell execution policy, Windows may require permission before running downloaded scripts.
 
 ```powershell
 .\Run-SqlHealthCheck.ps1
 ```
 
-
-The first run attempts to create a local `SQLBuildReference.json` cache from Microsoft Learn. Generated reports are written to the configured output directory.
+The generated HTML report will be written to the configured output directory.
 
 ## Optional SQL discovery
 
